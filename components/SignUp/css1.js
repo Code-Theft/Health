@@ -1,10 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
 
-//Poppins Font
+let customFonts = {
+    'Pregular': require('../../assets/fonts/Poppins-Regular.ttf'),
+    'Plight': require('../../assets/fonts/Poppins-Light.ttf'),
+    'Pmed': require('../../assets/fonts/Poppins-Medium.ttf'),
+};
 
 
-export default StyleSheet.create({
+
+
+const styles = StyleSheet.create({
     flexContainer: {
         flex: 1,
     },
@@ -26,6 +32,13 @@ export default StyleSheet.create({
         textAlign: 'center',
         paddingTop: 50,
         paddingLeft: 30,
+        flex: 2,
+        // borderWidth:1,
+        // borderColor:'red',
+    },
+    welcomeTEX3: {
+        textAlign: 'center',
+        paddingTop: 50,
         flex: 2,
         // borderWidth:1,
         // borderColor:'red',
@@ -339,6 +352,17 @@ export default StyleSheet.create({
         borderRadius: 100,
 
     },
+    greenBoxImg2: {
+
+        borderBottomRightRadius: 53,
+        borderBottomLeftRadius: 53,
+        objectFit: 'cover',
+        flex: 1,
+        width: '100%',
+
+    },
+
+
     ProffName: {
         fontSize: 40,
         padding: 12,
@@ -369,30 +393,35 @@ export default StyleSheet.create({
     container1: {
         flex: 1,
         padding: 10,
-        borderColor:'red',
-        borderWidth:2,
-      },
-      row1: {
+
+    },
+    row1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 16,
-      },
-      card1: {
+    },
+    card1: {
         width: '30%',
         aspectRatio: 1, // to maintain a square shape
         backgroundColor: '#e0e0e0',
-        borderRadius:20,
-      },
-      welcomeTEXHomeApp: {
-        
-        paddingTop: 30,
-       
-        flex: 2,
-        justifyContent:'center',
-        alignItems:'center',
-        marginLeft:0,
-        borderWidth:1,
-        borderColor:'blue',
-    },
 
+    },
+    welcomeTEXHomeApp: {
+
+        paddingTop: 30,
+
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 0,
+
+    },
+    cardss :{
+        
+        margin:10,
+    }
 });
+
+
+
+export default { ...styles };

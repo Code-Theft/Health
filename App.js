@@ -1,9 +1,9 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import { React, useEffect, useRef, useState } from "react";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { Screen } from "react-native-screens";
 
 // Navigation Routes
 import HomeScreen from "./components/SignUp/Homescreen";
@@ -18,40 +18,58 @@ import HomeApp from "./components/Home/HomeApp";
 import Profile from "./components/Home/Profile";
 import MainPage from "./components/Home/MainPage";
 
+
+//Profile Routes
+import HMSReport from "./components/Daily/HMSReport";
+import { auth, db } from "./components/firebase/firebase.config";
+
+
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
 
 export default function App() {
-  const styles = StyleSheet.create({
 
-    appbarr: {
-      backgroundColor: '#ffff00',
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState(null);
 
-      height: 500,
-    }
-  });
+  // Check if a user is logged in or not
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setInitializing(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (initializing) {
+    return <HomeScreen />;
+  }
+
   return (
 
-    <NavigationContainer style={styles.appbarr}>
-      <Stack.Navigator initialRouteName="HomeApp">
-        {/* ------Sign Up Routes */}
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {user ? (
+          <Stack.Screen name="Home" component={HomeApp} />
+        ) : (
+          <Stack.Screen name="Login" component={HomeScreen} />
+        )}
+        <Stack.Group>
 
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="SignUppage1" component={SignUppage1} options={{ headerShown: false }} />
-        <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-        <Stack.Screen name="Otp" component={Otp} options={{ headerShown: false }} />
-        {/* <Stack.Screen name="OtpVerifed" component={OtpVerifed} options={{ headerShown: false }} /> */}
-        <Stack.Screen name="AccountCreated" component={AccountCreated} options={{ headerShown: false }} />
-
-
-        {/* ------Home App Routes */}
-        <Stack.Screen name="HomeApp" component={HomeApp} options={{ headerShown: false }} />
-      
-
-
-
+          <Stack.Screen name="SignUppage1" component={SignUppage1} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Otp" component={Otp} />
+          {/* <Stack.Screen name="OtpVerifed" component={OtpVerifed}  */}
+          <Stack.Screen name="AccountCreated" component={AccountCreated} />
+          {/* ------Home App Routes */}
+          <Stack.Screen name="HomeApp" component={HomeApp} />
+          <Stack.Screen name="HMSReport" component={HMSReport} screenOptions={{headerShown:true}}/>
+        </Stack.Group>
 
       </Stack.Navigator>
 

@@ -1,5 +1,5 @@
 import { React, useEffect, useRef, useState } from "react";
-import { Button, View, Text, StyleSheet, Pressable, Card } from "react-native";
+import { Button, View, Text, StyleSheet, Pressable, Card ,Alert,ActivityIndicator} from "react-native";
 import { useFonts } from 'expo-font';
 import { TextInput, IconButton, } from 'react-native-paper';
 
@@ -13,34 +13,40 @@ import { getActionFromState } from "@react-navigation/native";
 
 
 export default function Otp({ navigation }) {
-    //Poppins Font
-    // const [fontsLoaded] = useFonts({
-    //     'Plight': require('../../assets/fonts/Poppins-Light.ttf'),
-    //     'Pregular': require('../../assets/fonts/Poppins-Regular.ttf'),
-    //     'Pmed': require('../../assets/fonts/Poppins-Medium.ttf'),
-    // });
-    // if (!fontsLoaded) {
-    //     return null;
-    // }
+
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState({ field: '', message: '' });
+    const [isValidEmail, setIsValidEmail] = useState(true);
 
-    const FormValiate = () => {
-        let loginError = { field: '', message: '' };
-        if (email === '') {
-            loginError.field = 'email';
-            loginError.message = 'Email cannot be empty';
-            setError(loginError);
-        }
-        else {
-            logInWithEmailAndPassword(email, password);
-        }
+    const [password, setPassword] = useState('');
+    const [isValidPassword, setIsValidPassword] = useState(true);
+
+    const handleEmailChange = (text) => {
+        setEmail(text);
+        setIsValidEmail(true); // Reset validation on each input change
     };
 
+    const handlePasswordChange = (text) => {
+        setPassword(text);
+        setIsValidPassword(true); // Reset validation on each input change
+    };
 
     const logInWithEmailAndPassword = async (email, password) => {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        
+
+        if ((email.trim() === '') || (!emailRegex.test(email))) {
+            setIsValidEmail(false);
+            Alert.alert('Error', 'Please enter a valid email');
+
+            return;
+        }
+        if (password.trim() === '')  {
+            setIsValidPassword(false);
+            Alert.alert('Error', 'Password cannot be empty');
+            return;
+        }
+
         try {
             await signInWithEmailAndPassword(auth, email, password)
                 .then((re) => {
@@ -58,7 +64,15 @@ export default function Otp({ navigation }) {
 
     };
 
-    return (
+    const [fontsLoaded] = useFonts({
+        'Plight': require('../../assets/fonts/Poppins-Light.ttf'),
+        'Pregular': require('../../assets/fonts/Poppins-Regular.ttf'),
+        'Pmed': require('../../assets/fonts/Poppins-Medium.ttf'),
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
+    return(
         <View style={styles.centeredFlex}>
             <View style={styles.centerDIv}>
                 <IconButton
@@ -82,15 +96,11 @@ export default function Otp({ navigation }) {
                     activeOutlineColor="#32B868"
                     style={styles.input}
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={handleEmailChange}
                     left={<TextInput.Icon icon="account" />}
                     keyboardType={'email-address'}
                 />
-                {
-                    error.field === 'email' && (
-                        <Text style={styles.FormError}>{error.message}</Text>
-                    )
-                }
+                
             </View>
             <View style={styles.formSt2}>
                 <TextInput
@@ -101,7 +111,7 @@ export default function Otp({ navigation }) {
                     activeOutlineColor="#32B868"
                     style={styles.input}
                     value={password}
-                    onChangeText={setPassword}
+                    onChangeText={handlePasswordChange}
                     keyboardType={'default'}
                     secureTextEntry={true}
 
@@ -116,12 +126,12 @@ export default function Otp({ navigation }) {
                     style={styles.getstartBut}
                     // onPress={() => navigation.navigate('OtpVerifed')}
 
-                    // onPress={async () => {
-                    //     FormValiate();
-                    //     await logInWithEmailAndPassword(email, password);
+                    onPress={async () => {
+                        
+                        await logInWithEmailAndPassword(email, password);
 
-                    // }}
-                    onPress={() => FormValiate()}
+                    }}
+                // onPress={() => FormValiate()}
                 >
                     <Text style={styles.getstartButex}>Login</Text>
                 </Pressable>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text, StyleSheet, Image, Alert, ImageBackground, Pressable } from "react-native";
+import { Button, View, Text, StyleSheet, Image, Alert, ImageBackground, Pressable, KeyboardAvoidingView } from "react-native";
 import { useFonts } from 'expo-font';
 import styles from './css1';
 
@@ -16,7 +16,7 @@ export default function SignUppage1({ navigation }) {
 
 
 
-  
+
 
     return (
         <View style={styles.flexContainer}>
@@ -24,7 +24,7 @@ export default function SignUppage1({ navigation }) {
 
             <View style={styles.greenBox1}>
                 <Image
-                    style={styles.greenBoxImg1}
+                    style={styles.greenBoxImg2}
                     source={require('../../assets/signup1.jpg')} />
 
             </View>
