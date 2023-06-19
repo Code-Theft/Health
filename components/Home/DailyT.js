@@ -5,20 +5,26 @@ import { Divider, DataTable, Button, Avatar, Card, IconButton, Switch, Modal } f
 import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import * as Progress from 'react-native-progress';
-
+import Instruction from "../Daily/Instruction";
 
 import styles from './../SignUp/css1';
 // Firebase
 
 
-export default function DailyT({ navigation }) {
+export default function DailyT() {
 
     const [progress, setProgress] = useState(0);
     const [cardArray, setCardArray] = useState(CardArray);
+    const [showModal, setShowModal] = useState(false);
 
+    const navigation = useNavigation();
+
+    const INSNav = () =>{
+        navigation.navigate('INSRoute');
+    }
 
     const CardArray = [
-        { name: 'Temperature', subtitle: 'Measure your Body Temperature', Licon: 'temperature-celsius', Ricon: 'close' },
+        { name: 'Temperature', subtitle: 'Measure your Body Temperature', Licon: 'temperature-celsius', Ricon: 'check' },
         { name: 'SP O2', subtitle: 'Measure your Oxygen Saturation level', Licon: 'molecule', Ricon: 'close' },
         { name: 'Pressure', subtitle: 'Measure your Blood Pressure', Licon: 'water', Ricon: 'close' },
         { name: 'Heart Rate', subtitle: 'Measure your Oxygen saturation level', Licon: 'heart', Ricon: 'check', }
@@ -32,7 +38,7 @@ export default function DailyT({ navigation }) {
         setCardArray(updatedCardArray); // Update the state with the new array
     };
 
-
+  
 
     useEffect(() => {
         const checkCount = CardArray.reduce((count, card) => {
@@ -55,7 +61,7 @@ export default function DailyT({ navigation }) {
         return `${Math.round(progress * 100)}%`;
     };
 
-
+    
 
     return (
         <View style={styles.flexContainer}>
@@ -70,10 +76,10 @@ export default function DailyT({ navigation }) {
                     <Progress.Circle size={150} indeterminate={false} progress={progress} color="#1a1a1a" unfilledColor="#53AB76" borderWidth={0}
                         animated={true} showsText={true} formatText={formatText} />
                     <Text style={styles.SubVVp}>
-                        <Text>You have completed {progress*4} / 4</Text>
+                        <Text>You have completed {progress * 4} / 4</Text>
                         <Text> Tasks </Text>
                     </Text>
-                    
+
                 </View>
             </View>
 
@@ -95,7 +101,7 @@ export default function DailyT({ navigation }) {
                         />
                     </Card>
                 ))}
-               
+
 
 
             </View>
@@ -103,12 +109,16 @@ export default function DailyT({ navigation }) {
             <View style={styles.butContain}>
                 <Pressable
                     style={styles.getstartBut}
-                // onPress={() => navigation.navigate('SignUppage1')} 
+                    onPress={() => INSNav()}
                 >
                     <Text style={styles.getstartButex}>Complete Now</Text>
                 </Pressable>
-                              
+
+
             </View>
+
+
+
 
         </View>
     );

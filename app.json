@@ -23,7 +23,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.janajith.Heal"
+      "package": "com.janajith.Heal",
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "ACCESS_COARSE_LOCATION",
+        {
+          "name": "ACCESS_FINE_LOCATION",
+          "maxSdkVersion": 30
+        }
+      ]
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"

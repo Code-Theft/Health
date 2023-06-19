@@ -9,29 +9,24 @@ import ProfReport from "./ProfReport";
 
 
 
-const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
-const data=[ {value:50}, {value:80}, {value:90}, {value:70} ]
 
 
 
-export default function HMSReport() {
+
+export default function Instruction({navigation}) {
 
  
     return (
         <View style={styles.flexContainer}>
 
-            <Appbar.Header>
-                <Appbar.Content title="HMS Report" />
-
-                <Appbar.BackAction accessibilityLabel='Back'  />
-            </Appbar.Header>
+            
             <View style={styles.VvCon}>
 
                 <View style={styles.greenBox}>
 
 
                     <View style={styles.SubVV}>
-                        <Text>Detailed Report 1</Text>
+                        <Text>Instructions</Text>
                     </View>
 
 
@@ -44,12 +39,21 @@ export default function HMSReport() {
             <View style={styles.welcomeTEX}>
 
                 <Text>Hello Myre</Text>
+                <Text>Enable Bluetooth</Text>
+                <Text>Ensure ECG Connection</Text>
                 {/* <BarApp/> */}
             </View>
 
-            {/* ---------------- Landing Body Section ------------- */}
-            {/* <ProfReport />
-            <ProfFoot /> */}
+            <View style={styles.butContain}>
+                <Pressable
+                    style={styles.getstartBut}
+                    onPress={() => navigation.navigate("Reading")}
+                >
+                    <Text style={styles.getstartButex}>Start Checking</Text>
+                </Pressable>
+
+
+            </View>
 
 
 

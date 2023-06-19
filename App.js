@@ -15,12 +15,14 @@ import AccountCreated from "./components/SignUp/Phone";
 
 // Home App Routes
 import HomeApp from "./components/Home/HomeApp";
-import Profile from "./components/Home/Profile";
-import MainPage from "./components/Home/MainPage";
 
 
 //Profile Routes
 import HMSReport from "./components/Daily/HMSReport";
+import Instruction from "./components/Daily/Instruction";
+import INSRoute from "./components/Daily/INSRoute";
+
+
 import { auth, db } from "./components/firebase/firebase.config";
 
 
@@ -67,9 +69,15 @@ export default function App() {
           {/* <Stack.Screen name="OtpVerifed" component={OtpVerifed}  */}
           <Stack.Screen name="AccountCreated" component={AccountCreated} />
           {/* ------Home App Routes */}
+        
+          <Stack.Screen name="INSRoute" component={INSRoute} />
           <Stack.Screen name="HomeApp" component={HomeApp} />
-          <Stack.Screen name="HMSReport" component={HMSReport} screenOptions={{headerShown:true}}/>
+          <Stack.Screen name="HMSReport" component={HMSReport} screenOptions={{ headerShown: true }} />
+
         </Stack.Group>
+
+
+
 
       </Stack.Navigator>
 

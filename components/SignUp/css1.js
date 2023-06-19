@@ -419,7 +419,8 @@ const styles = StyleSheet.create({
     cardss :{
         
         margin:10,
-    }
+    },
+   
 });
 
 
